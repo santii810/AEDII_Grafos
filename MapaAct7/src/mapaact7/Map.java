@@ -35,7 +35,7 @@ public class Map<K, V> implements TAD_Map<K, V> {
     }
 
     public Map() {
-        this(30); //Llama al constructor parametrado
+        this(40); //Llama al constructor parametrado
     }
 
     private int funcionHash(K clave) {
@@ -70,20 +70,22 @@ public class Map<K, V> implements TAD_Map<K, V> {
     }
 
     @Override
-    public void eliminar(K clave) {
+    public V eliminar(K clave) {
         int index = funcionHash(clave);
         if (getV(clave) != null) { //Si la clave existe entonces getV(clave) será distinto de null
             for (Par<K, V> p : lista[index]) {
                 if (p.getClave().equals(clave)) //Buscamos el par en cuestión...
                 {
+                    V toret= (V) p.getValor();
                     lista[index].remove(p);    //Y lo eliminamos
+                    return toret;
                 }
                 nElem--; //Reducimos el nº de elementos
             }
         } else {
             throw new IllegalArgumentException("No existe dicho elemento a eliminar");
         }
-
+        return null;
     }
 
     @Override

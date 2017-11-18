@@ -28,7 +28,7 @@ public interface TAD_Map <K,V>{
     //Modifica: this
     //Produce: inserta el par (K,V), si la clave ya existe sobreescribe el valor
     
-    void eliminar(K clave) throws IllegalArgumentException;
+    V eliminar(K clave) throws IllegalArgumentException;
     //Modifica: this
     //Produce: elimina el valor
     
