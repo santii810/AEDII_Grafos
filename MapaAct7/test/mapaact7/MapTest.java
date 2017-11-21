@@ -20,12 +20,12 @@ import java.util.List;
  * @author Cid
  */
 public class MapTest {
-/*
+
     @Test(expected = IllegalArgumentException.class)
     public void testIllegalCapacity() {
         Map hashMap = new Map(-5);
     }
-*/
+
     @Test
     public void testTamañoVacio() {
         Map instance = new Map();
@@ -112,8 +112,11 @@ public class MapTest {
         String c2 = "c2";
         String c3 = "c3";
         instance.insertar(c1, "v1");
+        System.out.println(c1.hashCode()% instance.tamanho());
         instance.insertar(c2, "v2");
+        System.out.println(c2.hashCode()% instance.tamanho());
         instance.insertar(c3, "v3");
+        System.out.println(c3.hashCode()% instance.tamanho());
         List<String> expResult = new ArrayList<>();
         expResult.add(c1);
         expResult.add(c2);

@@ -20,15 +20,15 @@ public interface TAD_Map <K,V>{
     boolean esVacio();
     //Produce: devuelve true si el mapa esta vacio, false en caso contrario
     
-    V getV (K clave) throws IllegalArgumentException;
-    //Produce: si la clave no existe lanza una IllegalArgumentException,
+    V getV (K clave);
+    //Produce: si la clave no existe devuelve null,
     //     si no devuelve el valor V asociado a dicha clave
     
     void insertar(K clave, V valor);
     //Modifica: this
     //Produce: inserta el par (K,V), si la clave ya existe sobreescribe el valor
     
-    V eliminar(K clave) throws IllegalArgumentException;
+    V eliminar(K clave) ;
     //Modifica: this
     //Produce: elimina el valor
     

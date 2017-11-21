@@ -22,12 +22,12 @@ public class Map<K, V> implements TAD_Map<K, V> {
     private int nElem;
 
     public Map(int cap) {
-        if (capacidad <= 0) {
+        if (cap <= 0) {
             throw new IllegalArgumentException("La capacidad de ser un numero positivo (capacidad>0)");
         } else {
             capacidad = cap;
             nElem = 0;
-            lista = new ArrayList[cap];
+            lista = new List[cap];
             for (int i = 0; i < capacidad; i++) {
                 lista[i] = new ArrayList<>();
             }
@@ -35,7 +35,7 @@ public class Map<K, V> implements TAD_Map<K, V> {
     }
 
     public Map() {
-        this(40); //Llama al constructor parametrado
+        this(30); //Llama al constructor parametrado
     }
 
     private int funcionHash(K clave) {
@@ -44,14 +44,14 @@ public class Map<K, V> implements TAD_Map<K, V> {
     }
 
     @Override
-    public V getV(K clave) throws IllegalArgumentException {
+    public V getV(K clave) {
         int index = funcionHash(clave);
         for (Par<K, V> p : lista[index]) {
             if (p.getClave().equals(clave)) {
                 return (V) p.getValor(); //Devuelve el valor asociado a la clave introducida de manera inmediata
             }
         }
-        throw new IllegalArgumentException("Clave no válida"); //Si se completa el bucle es que la clave no existe
+        return null; //Si se completa el bucle es que la clave no existe
     }
 
     @Override
@@ -82,10 +82,10 @@ public class Map<K, V> implements TAD_Map<K, V> {
                 }
                 nElem--; //Reducimos el nº de elementos
             }
-        } else {
-            throw new IllegalArgumentException("No existe dicho elemento a eliminar");
         }
-        return null;
+            System.out.println("No existe dicho elemento a eliminar");
+            return null;
+        
     }
 
     @Override
@@ -96,7 +96,7 @@ public class Map<K, V> implements TAD_Map<K, V> {
     @Override
     public void vaciar() {
         for (int i = 0; i < capacidad; i++) {
-            lista[i] = new ArrayList<>();
+            lista[i].clear();
         }
     }
 
@@ -111,6 +111,7 @@ public class Map<K, V> implements TAD_Map<K, V> {
         for (int i = 0; i < capacidad; i++) {
             for (Par<K, V> p : lista[i]) {
                 vectorClaves.add(p.getClave());
+                System.out.println(p.getClave());
             }
         }
         return vectorClaves.iterator();
