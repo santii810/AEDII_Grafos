@@ -35,7 +35,7 @@ public class Map<K, V> implements TAD_Map<K, V> {
     }
 
     public Map() {
-        this(30); //Llama al constructor parametrado
+        this(35); //Llama al constructor parametrado
     }
 
     private int funcionHash(K clave) {

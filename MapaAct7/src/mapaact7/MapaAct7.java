@@ -22,42 +22,41 @@ public class MapaAct7 {
     }
 
     public static <E> Map<Vertice<E>, String> colorearMapa(Grafo<E, Integer> g, String[] colores) {
-        Map<Vertice<E>, String> colors = new Map();
+        Map<Vertice<E>, String> colorfullMap = new Map();
         Iterator<Vertice<E>> it_v = g.vertices();
-        //put vertex with empty string on map
+        // put vertex with empty string on map
         while (it_v.hasNext()) {
             Vertice<E> vert = it_v.next();
-            colors.insertar(vert, new String());
+            colorfullMap.insertar(vert, new String());
         }
         it_v = g.vertices();
-
+        // iterate all vertex chosing aproppiate color 
         while (it_v.hasNext()) {
             Vertice<E> currentVertex = it_v.next();
-            String chosenColour = chooseColor(colors, colores, currentVertex, g);
-            colors.insertar(currentVertex, chosenColour);
+            String chosenColour = chooseColor(colorfullMap, colores, currentVertex, g);
+            colorfullMap.insertar(currentVertex, chosenColour);
         }
-        return colors;
+        return colorfullMap;
     }
-	    
-private static <E> String chooseColor (Map<Vertice<E>,String> map, String [] colors, Vertice<E> vertex,Grafo<E,Integer> graph)
-{
-    int colorIndex = 0;
-    String color = colors[colorIndex];
-    boolean fin = false;
 
-    while (colorIndex<colors.length && !fin){
-        fin = true;
-        color = colors[colorIndex];
-        Iterator<Vertice<E>> it_ady = graph.adyacentes(vertex);
-        while (it_ady.hasNext() && fin){
-            Vertice<E> vAct = it_ady.next();
-            if (map.getV(vAct).equals(color)){
-                colorIndex++;
-                fin = false;
+    /* for the sended vertex put first color in array that not does match with adjacent vertex color */
+    private static <E> String chooseColor(Map<Vertice<E>, String> map, String[] colors, Vertice<E> vertex, Grafo<E, Integer> graph) {
+        int colorIndex = 0;
+        String color = colors[colorIndex];
+        boolean end = false;
+
+        while (colorIndex < colors.length && !end) {
+            end = true;
+            color = colors[colorIndex];
+            Iterator<Vertice<E>> it_ady = graph.adyacentes(vertex);
+            while (it_ady.hasNext() && end) {
+                Vertice<E> vAct = it_ady.next();
+                if (map.getV(vAct).equals(color)) {
+                    colorIndex++;
+                    end = false;
+                }
+            }
         }
-    }  
-   }
-    return color;    
-} 
-
+        return color;
+    }
 }

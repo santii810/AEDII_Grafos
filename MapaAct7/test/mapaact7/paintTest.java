@@ -84,23 +84,13 @@ public class paintTest {
 
     @Before
     public void setUp() {
+        rellenarGrafoG();
     }
 
     @After
     public void tearDown() {
     }
 
-    /**
-     * Test of main method, of class MapaAct7.
-     */
-    @Test
-    public void testMain() {
-        System.out.println("main");
-        String[] args = null;
-        MapaAct7.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of colorearMapa method, of class SolucionUsoTablaHash.
@@ -110,7 +100,7 @@ public class paintTest {
         System.out.println("colorearMapa");
         String[] colores = {"rojo", "azul", "verde", "amarillo"};
         Map<Vertice<Integer>, String> grafoActual = colorearMapa(g1, colores);
-        Map<Vertice<Integer>, String> expResult = new Map<>();
+        Map<Vertice<Integer>, String> expResult = new Map<>(35);
         expResult.insertar(uno, "rojo");
         expResult.insertar(dos, "azul");
         expResult.insertar(tres, "rojo");
