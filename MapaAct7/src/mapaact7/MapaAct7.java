@@ -30,7 +30,7 @@ public class MapaAct7 {
             colorfullMap.insertar(vert, new String());
         }
         it_v = g.vertices();
-        // iterate all vertex chosing aproppiate color 
+        // iterate all vertex choosing aproppiate color 
         while (it_v.hasNext()) {
             Vertice<E> currentVertex = it_v.next();
             String chosenColour = chooseColor(colorfullMap, colores, currentVertex, g);
