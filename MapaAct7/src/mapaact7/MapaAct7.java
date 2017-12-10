@@ -1,23 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mapaact7;
 
+import grafo.Arco;
 import grafo.Grafo;
 import grafo.Vertice;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
-/**
- *
- * @author Cid
- */
 public class MapaAct7 {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
     }
 
@@ -58,5 +49,74 @@ public class MapaAct7 {
             }
         }
         return color;
+    }
+
+    public static <E> Map<Vertice<E>, Integer> dijkstra(Grafo<E, Integer> g, Vertice<E> v) {
+
+        Map<Vertice<E>, Integer> toret = new Map<>();
+        List<Vertice<E>> porVisitar = new ArrayList<>();
+        Iterator<Vertice<E>> it_v = g.vertices();
+
+        //Relleno la lista con todos los vertices y tambien el mapa,
+        //asignandole "INFINITO" a la distancia de cada vertice
+        while (it_v.hasNext()) {
+            Vertice<E> vert = it_v.next();
+            toret.insertar(vert, Integer.MAX_VALUE);
+            porVisitar.add(vert);
+        }
+
+        //Modifico la distancia del vertice de origen
+        toret.insertar(v, 0);
+        Integer distancia;
+        Integer distanciaDestino;
+        Arco<E, Integer> arcoSelec;
+        Vertice<E> vDestino;
+
+        //Mientras queden vertices por visitar...
+        while (!porVisitar.isEmpty()) {
+
+            Vertice<E> vCercano = SiguienteVertice(toret, porVisitar.iterator());
+            
+            //Elimino el vertice visitado de la lista de los NO visitados
+            porVisitar.remove(vCercano);
+            Integer distanciaVCercano = toret.getV(vCercano);
+            Iterator<Arco<E, Integer>> it_arcos = g.arcos();
+
+            while (it_arcos.hasNext()) {
+                arcoSelec = it_arcos.next();
+                vDestino = arcoSelec.getDestino();
+                
+                //Si el origen del arco es el vertice que estamos visitando y el destino no ha sido visitado
+                if (arcoSelec.getOrigen().equals(vCercano) && porVisitar.contains(vDestino)) {
+                    distancia = arcoSelec.getEtiqueta();
+                    distanciaDestino = toret.getV(vDestino);
+                    //Cojo la distancia del arco  y la distancia almacenada en el mapa del vertice destino
+                    //Si la distancia del arco + distancia del vertice anterior es menor que la almacenada
+                    //en el mapa, la modifico
+                    if (distanciaVCercano + distancia < distanciaDestino) {
+                        toret.insertar(vDestino, distanciaVCercano + distancia);
+                    }
+                }
+            }
+        }
+        return toret;
+    }
+
+    //Devuelve el vertice mas cercano al vertice de origen que falta por visitar
+    private static <E> Vertice<E> SiguienteVertice(Map<Vertice<E>, Integer> mapaDistancia, Iterator<Vertice<E>> it_PorVisitar) {
+        Vertice<E> vActual, vCercano = it_PorVisitar.next();
+        Integer dActual, distanciaMin = mapaDistancia.getV(vCercano);
+
+        while (it_PorVisitar.hasNext()) {
+            vActual = it_PorVisitar.next();
+            dActual = mapaDistancia.getV(vActual);
+            if (dActual < distanciaMin) {
+                vCercano = vActual;
+                distanciaMin = dActual;
+            }
+        }
+
+        return vCercano;
+
     }
 }
