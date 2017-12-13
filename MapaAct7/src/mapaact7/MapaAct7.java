@@ -76,7 +76,7 @@ public class MapaAct7 {
         while (!porVisitar.isEmpty()) {
 
             Vertice<E> vCercano = SiguienteVertice(toret, porVisitar.iterator());
-            
+//            Vertice<E> vCercano = SiguienteVertice(toret, porVisitar);
             //Elimino el vertice visitado de la lista de los NO visitados
             porVisitar.remove(vCercano);
             Integer distanciaVCercano = toret.getV(vCercano);
@@ -85,7 +85,7 @@ public class MapaAct7 {
             while (it_arcos.hasNext()) {
                 arcoSelec = it_arcos.next();
                 vDestino = arcoSelec.getDestino();
-                
+
                 //Si el origen del arco es el vertice que estamos visitando y el destino no ha sido visitado
                 if (arcoSelec.getOrigen().equals(vCercano) && porVisitar.contains(vDestino)) {
                     distancia = arcoSelec.getEtiqueta();
@@ -101,22 +101,60 @@ public class MapaAct7 {
         }
         return toret;
     }
+//
+//    //Devuelve el vertice mas cercano al vertice de origen que falta por visitar
+//    private static <E> Vertice<E> SiguienteVertice(Map<Vertice<E>, Integer> mapaDistancia, Iterator<Vertice<E>> it_PorVisitar) {
+//        Vertice<E> vActual, vCercano = it_PorVisitar.next();
+//        Integer dActual, distanciaMin = mapaDistancia.getV(vCercano);
+//
+//        while (it_PorVisitar.hasNext()) {
+//            vActual = it_PorVisitar.next();
+//            dActual = mapaDistancia.getV(vActual);
+//            if (dActual < distanciaMin) {
+//                vCercano = vActual;
+//                distanciaMin = dActual;
+//            }
+//        }
+//
+//        return vCercano;
+//
+//    }
 
     //Devuelve el vertice mas cercano al vertice de origen que falta por visitar
     private static <E> Vertice<E> SiguienteVertice(Map<Vertice<E>, Integer> mapaDistancia, Iterator<Vertice<E>> it_PorVisitar) {
-        Vertice<E> vActual, vCercano = it_PorVisitar.next();
+        ArrayList<Vertice<E>> porVisitar = new ArrayList<>();
+      
+        while (it_PorVisitar.hasNext()) {
+            porVisitar.add(it_PorVisitar.next());
+        }
+        
+        
+        Iterator<Vertice<E>> it_mapa = mapaDistancia.getClaves();
+        Vertice<E> vCercano = porVisitar.get(0);
+        Vertice<E> vActual = vCercano;
         Integer dActual, distanciaMin = mapaDistancia.getV(vCercano);
 
-        while (it_PorVisitar.hasNext()) {
-            vActual = it_PorVisitar.next();
-            dActual = mapaDistancia.getV(vActual);
-            if (dActual < distanciaMin) {
-                vCercano = vActual;
-                distanciaMin = dActual;
-            }
+//        porVisitar.remove(vActual);
+        System.out.println("Vertice" + vActual);
+        for (Vertice<E> vertice : porVisitar) {
+            System.out.println(vertice + ", " + mapaDistancia.getV(vertice));
         }
 
+        while (it_mapa.hasNext()) {
+            vActual = it_mapa.next();
+
+            if (porVisitar.contains(vActual)) {
+                porVisitar.remove(vActual);
+                dActual = mapaDistancia.getV(vActual);
+                if (dActual < distanciaMin) {
+                    vCercano = vActual;
+                    distanciaMin = dActual;
+                }
+            }
+        }
+        System.out.println("cercano" + vCercano);
         return vCercano;
 
     }
+
 }

@@ -111,7 +111,6 @@ public class Map<K, V> implements TAD_Map<K, V> {
         for (int i = 0; i < capacidad; i++) {
             for (Par<K, V> p : lista[i]) {
                 vectorClaves.add(p.getClave());
-                System.out.println(p.getClave());
             }
         }
         return vectorClaves.iterator();
